@@ -11,9 +11,11 @@ jobs:
     strategy:
       matrix:
         os:
-          - ubuntu-22.04
+          - ubuntu-24.04
           - windows-2022
         php:
+          - 8.4
+          - 8.3
           - 8.2
           - 8.1
           - 8.0
@@ -32,6 +34,8 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           coverage: xdebug
+          ini-file: development
+          ini-values: phar.readonly=off
       - run: composer install
       - run: vendor/bin/phpunit --coverage-text
         if: ${{ matrix.php >= 7.3 }}
