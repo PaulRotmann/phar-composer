@@ -13,7 +13,7 @@ class Build extends Command
     /** @var Packager */
     private $packager;
 
-    public function __construct(Packager $packager = null)
+    public function __construct($packager = null)
     {
         parent::__construct();
 

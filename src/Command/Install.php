@@ -18,7 +18,7 @@ class Install extends Command
     /** @var bool */
     private $isWindows;
 
-    public function __construct(Packager $packager = null, $isWindows = null)
+    public function __construct($packager = null, $isWindows = null)
     {
         if ($packager === null) {
             $packager = new Packager();

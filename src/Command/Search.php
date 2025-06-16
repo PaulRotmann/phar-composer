@@ -27,7 +27,7 @@ class Search extends Command
     /** @var bool */
     private $isWindows;
 
-    public function __construct(Packager $packager = null, Client $packagist = null, $isWindows = null)
+    public function __construct($packager = null, $packagist = null, $isWindows = null)
     {
         if ($packager === null) {
             $packager = new Packager();
@@ -77,13 +77,24 @@ class Search extends Command
         }
 
         $question = new ChoiceQuestion($label, $select);
-        $index = array_search($helper->ask($input, $output, $question), $select);
+        $selected = $helper->ask($input, $output, $question);
+        $index = array_search($selected, $select, true);
+
+        // Check if the index is valid (not false)
+        if ($index === false) {
+            return null;
+        }
 
         if ($index === 0) {
             return null;
         }
 
         $indices = array_keys($choices);
+        // Verify index is in range before accessing
+        if (!isset($indices[$index - 1])) {
+            return null;
+        }
+
         return $indices[$index - 1];
     }
 
